@@ -4,21 +4,21 @@
 
 ## スクリプトの実行
 
-step1．DCMファイルからniftiファイルに変換
+__step1．__ DCMファイルからniftiファイルに変換
 ```python
 cd ~/SlicePartitioningMethod/totalSegmentator/script
 python dcm2nifti.py 
 ```
 <br>
 
-step2．3領域に分割するための元となる（甲状腺，肺，腎臓）のセグメンテーションを作成
+__step2．__ 3領域に分割するための元となる（甲状腺，肺，腎臓）のセグメンテーションを作成
 ```python
 pyhton totalseg.py
 ```
 
 <br>
 
-step3．作成したセグメンテーションをもとにデータセットを3領域に分割（dataset:upper, middle, lowerの作成）
+__step3．__ 作成したセグメンテーションをもとにデータセットを3領域に分割（dataset:upper, middle, lowerの作成）
 ```python
 cd 
 cd ~/SlicePartitioningMethod/slicePartitioning/script
@@ -36,7 +36,7 @@ python slicepartitioning.py
 ↓
 #### ここで３つのテストセットの生成画像が得られる　　<br><br>
   
-step4．3つのモデルから得られた各テストセットの生成画像を平均化
+__step4．__ 3つのモデルから得られた各テストセットの生成画像を平均化
 ```python
 python unity_dcmfolder.py
 ```
