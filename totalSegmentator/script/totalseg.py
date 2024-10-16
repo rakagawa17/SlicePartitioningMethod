@@ -3,68 +3,68 @@ import nibabel as nib
 import numpy as np
 import os
 
-#スライス分割のためthyroid_gland, whole_lung, kidneyの3つのマスクを作成する
-def thyroid_gland_segmentation(input_file, output_folder):
-    # 患者IDをファイル名から取得
+def process_file(input_file, output_folder, masks, combined_filename):
     patient_id = os.path.basename(input_file)[:-7]  # '.nii.gz'を除外
     output_path = os.path.join(output_folder, patient_id)
 
-    # 出力フォルダが存在しない場合は作成
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
+    # 出力フォルダ作成
+    os.makedirs(output_path, exist_ok=True)
 
-    # 検出するマスク
-    mask = ["thyroid_gland"]
+    # マスクの作成
+    totalsegmentator(input_file, output_path, roi_subset=masks)
 
-    # マスクの作成を実行
-    totalsegmentator(input_file, output_path, roi_subset=mask)
+    # 結合マスクの初期化
+    combined = None
 
-    # マスク画像の読み込み
-    ref_img_path = os.path.join(output_path, "thyroid_gland.nii.gz")
-    if not os.path.exists(ref_img_path):
-        print(f"マスクファイルが見つかりません: {ref_img_path}")
-        return
+    # 各マスクのデータを処理して結合
+    for mask in masks:
+        ref_img_path = os.path.join(output_path, f"{mask}.nii.gz")
+        if not os.path.exists(ref_img_path):
+            print(f"マスクファイルが見つかりません: {ref_img_path}")
+            continue
 
-    ref_img = nib.load(ref_img_path)
-    combined = np.zeros(ref_img.shape, dtype=np.uint8)
+        ref_img = nib.load(ref_img_path)
+        img = ref_img.get_fdata()
 
-    # マスクデータを処理し、しきい値で二値化
-    img = ref_img.get_fdata()
-    combined[img > 0.5] = 1
+        if combined is None:
+            combined = np.zeros(ref_img.shape, dtype=np.uint8)
 
-    # 新しいマスクファイルを保存
-    thyroid_img = nib.Nifti1Image(combined, ref_img.affine)
-    thyroid_path = os.path.join(output_path, "thyroid_gland.nii")
-    nib.save(thyroid_img, thyroid_path)
+        combined[img > 0.5] = 1
 
-    # 圧縮したマスクファイルを保存
-    thyroid_gz_path = os.path.join(output_path, f"thyroid_gland_{os.path.basename(input_file)[-19:]}")
-    img = nib.load(thyroid_path)
-    nib.save(img, thyroid_gz_path)
+    # 結合したマスクを保存
+    if combined is not None:
+        combined_img = nib.Nifti1Image(combined, ref_img.affine)
+        combined_path = os.path.join(output_path, f"{combined_filename}.nii")
+        nib.save(combined_img, combined_path)
 
-    # 一時ファイルを削除
-    os.remove(thyroid_path)
-    os.remove(ref_img_path)
+        # 圧縮保存と一時ファイル削除
+        combined_gz_path = os.path.join(output_path, f"{combined_filename}_{os.path.basename(input_file)[-19:]}")
+        nib.save(nib.load(combined_path), combined_gz_path)
+        os.remove(combined_path)
 
-# def whole_lung_segmentation(input_file, output_folder):
-
-# def kidney_segmentation(input_file, output_folder):
+    # 個別のマスクファイルを削除
+    for mask in masks:
+        ref_img_path = os.path.join(output_path, f"{mask}.nii.gz")
+        if os.path.exists(ref_img_path):
+            os.remove(ref_img_path)
 
 def main():
-    # 入力フォルダと出力フォルダのパスを指定
-    input_folder = '/niftifolder'
-    output_folder = 'organSeg/dataset'
+    
+    inputfol = '/home/akagawa/Desktop/wd_black/test_nifti/CT2'
+    # 入力と出力フォルダのリスト
+    input_output_mask_data = [
+        (inputfol, '/home/akagawa/totalsegmentator/organs/test_NCCT_kidney', ['kidney_right', 'kidney_left'], 'kidney'),
+        (inputfol, '/home/akagawa/totalsegmentator/organs/test_NCCT_wholelung', ['lung_upper_lobe_right', 'lung_middle_lobe_right', 'lung_lower_lobe_right', 'lung_upper_lobe_left', 'lung_lower_lobe_left'], 'wholelung'),
+        (inputfol, '/home/akagawa/totalsegmentator/organs/test_NCCT_thyroid', ['thyroid_gland'], 'thyroid_gland')
+    ]
 
-    # 入力フォルダ内の全ての .nii.gz ファイルを処理
-    for filename in os.listdir(input_folder):
-        if filename.endswith('.nii.gz'):
-            input_file = os.path.join(input_folder, filename)
-            thyroid_gland_segmentation(input_file, output_folder)
-            # whole_lung_segmentation(input_file, output_folder)
-            # kidney_segmentation(input_file, output_folder)
+    # 各フォルダの処理
+    for input_folder, output_folder, masks, combined_filename in input_output_mask_data:
+        for filename in os.listdir(input_folder):
+            if filename.endswith('.nii.gz'):
+                process_file(os.path.join(input_folder, filename), output_folder, masks, combined_filename)
 
 if __name__ == "__main__":
     from multiprocessing import freeze_support
     freeze_support()
     main()
-
