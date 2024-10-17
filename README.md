@@ -1,6 +1,16 @@
 # SlicePartitioningMethod
 
 ## 環境
+※CUDA，cuDNN等ライブラリのインストール済，GPUの動作を確認していることを前提としています
+CUDAのバージョンに対応したPyTorchをインストールしてください（[公式Pytorchインストールページ](https://pytorch.org/get-started/locally/)）．
+
+  
+```python
+# Pytorchをinstallしていない場合（例：CUDA 11.8）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# 必要なライブラリのダウンロード
+pip install -r requirements.txt
+```
 
 ## スクリプトの実行
 
@@ -11,7 +21,7 @@ python dcm2nifti.py
 ```
 <br>
 
-__step2．__ 3領域に分割するための元となる（甲状腺，肺，腎臓）のセグメンテーションを作成
+__step2．__ 3領域に分割するための元となる（例：甲状腺，肺，腎臓）のセグメンテーションを作成
 ```python
 pyhton totalseg.py
 ```
@@ -46,3 +56,5 @@ python unity_dcmfolder.py
 <br>
 <br>
 <img src="https://img.shields.io/badge/-Python-F9DC3E.svg?logo=python&style=flat">
+
+[def]: http://qiita.com
