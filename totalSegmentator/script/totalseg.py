@@ -50,12 +50,12 @@ def process_file(input_file, output_folder, masks, combined_filename):
 
 def main():
     
-    inputfol = '/home/akagawa/Desktop/wd_black/test_nifti/CT2'
+    inputfol = '~/dataset01_nifti'
     # 入力と出力フォルダのリスト
     input_output_mask_data = [
-        (inputfol, '/home/akagawa/totalsegmentator/organs/test_NCCT_kidney', ['kidney_right', 'kidney_left'], 'kidney'),
-        (inputfol, '/home/akagawa/totalsegmentator/organs/test_NCCT_wholelung', ['lung_upper_lobe_right', 'lung_middle_lobe_right', 'lung_lower_lobe_right', 'lung_upper_lobe_left', 'lung_lower_lobe_left'], 'wholelung'),
-        (inputfol, '/home/akagawa/totalsegmentator/organs/test_NCCT_thyroid', ['thyroid_gland'], 'thyroid_gland')
+        (inputfol, '~/totalSegmentator/organSeg/dataset01_kidney', ['kidney_right', 'kidney_left'], 'kidney'),
+        (inputfol, '~/totalSegmentator/organSeg/dataset01_wholelung', ['lung_upper_lobe_right', 'lung_middle_lobe_right', 'lung_lower_lobe_right', 'lung_upper_lobe_left', 'lung_lower_lobe_left'], 'wholelung'),
+        (inputfol, '~/totalSegmentator/organSeg/dataset01_thyroid', ['thyroid_gland'], 'thyroid_gland')
     ]
 
     # 各フォルダの処理
