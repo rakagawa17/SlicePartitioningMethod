@@ -9,7 +9,10 @@ folders = [
     '/Users/akagawa/Research/Pix2Pix/result/middle/test_NCCT_middle',
     '/Users/akagawa/Research/Pix2Pix/result/lower/test_NCCT_lower'
 ]
-cases = ['case0505', 'case0506', 'case0507', 'case0508', 'case0509', 'case0510', 'case0523']  # 必要に応じて他のケースも追加
+folder_path = folders[0]
+cases = []  
+
+cases = [f for f in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, f))]
 
 # 加重平均用の重みリスト（必要に応じて変更）
 weights = {
