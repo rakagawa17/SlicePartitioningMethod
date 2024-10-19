@@ -5,9 +5,9 @@ import shutil
 
 # 入力フォルダのパス
 folders = [
-    '/Users/akagawa/Research/Pix2Pix/result/upper/test_NCCT_upper',
-    '/Users/akagawa/Research/Pix2Pix/result/middle/test_NCCT_middle',
-    '/Users/akagawa/Research/Pix2Pix/result/lower/test_NCCT_lower'
+    '~/test_gene_upper',
+    '~/test_gene_middle',
+    '~/test_gene_lower'
 ]
 folder_path = folders[0]
 cases = []  
@@ -24,7 +24,7 @@ weights = {
 # DICOMファイルの処理
 for case in cases:
     # 各ケースごとに出力フォルダを作成
-    output_folder = f'/Users/akagawa/Research/Pix2Pix/result/unity/test_NCCT/{case}'
+    output_folder = f'~/test_gene/{case}'
     os.makedirs(output_folder, exist_ok=True)
 
     # 各フォルダのdicomファイルのパスを取得

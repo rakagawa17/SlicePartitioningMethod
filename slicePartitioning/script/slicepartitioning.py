@@ -4,11 +4,8 @@ import nibabel as nib
 
 def copy_slices_up_to_segmentation(nifti_dir, src_dir, dst_dir, organ_name, copy_all=False):
     """
-    NIfTIファイルからスライスを調べて、該当するスライスまでDCMファイルをコピーする関数。
-    copy_all=Trueの場合、セグメンテーションスライスに到達するまでの全スライスをコピーする。
-
     Parameters:
-    nifti_dir (str): NIfTIファイルが格納されているフォルダのパス
+    nifti_dir (str): NIfTI形式の臓器セグメンテーションファイルが格納されているフォルダのパス
     src_dir (str): コピー元のフォルダのパス
     dst_dir (str): コピー先のフォルダのパス
     organ_name (str): 臓器名 ('thyroid_gland', 'whole_lung', 'kidney' など)
@@ -85,30 +82,30 @@ def copy_slices_up_to_segmentation(nifti_dir, src_dir, dst_dir, organ_name, copy
 
     print("Dataset copy complete.")
 
-#入力：dataset01 or dataset02
-src_dir = 'dataset'
+#入力フォルダ
+src_dir = '~/dataset'
 
 # 呼び出し例
 copy_slices_up_to_segmentation(
-    nifti_dir='totalSegmentator/organSeg/thyloid_gland_segmentation',
+    nifti_dir='~/totalSegmentator/organSeg/dataset_thyroidgland',
     src_dir = src_dir,
-    dst_dir='dataset_upper',
+    dst_dir='~/dataset_upper',
     organ_name='thyroid_gland',
     copy_all=True
 )
 
 copy_slices_up_to_segmentation(
-    nifti_dir='totalSegmentator/organSeg/lung_segmentation,
+    nifti_dir='~/totalSegmentator/organSeg/dataset_wholelung',
     src_dir = src_dir,
-    dst_dir='dataset_middle',
+    dst_dir='~/dataset_middle',
     organ_name='whole_lung',
     copy_all=False
 )
 
 copy_slices_up_to_segmentation(
-    nifti_dir='totalSegmentator/organSeg/kidney_segmentation',
+    nifti_dir='~/totalSegmentator/organSeg/dataset_kidney',
     src_dir = src_dir,
-    dst_dir='dataset_lower',
+    dst_dir='~/dataset_lower',
     organ_name='kidney',
     copy_all=False  
 )

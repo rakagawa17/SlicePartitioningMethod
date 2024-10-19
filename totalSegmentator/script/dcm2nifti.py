@@ -33,8 +33,8 @@ def convert_dicom_to_nifti(dicom_folder, nifti_output_folder):
                     shutil.rmtree(temp_output_folder)
 
 # 使用例
-dicom_folder = '~/dataset01'  # DICOMファイルの親フォルダへのパス
-nifti_output_folder = '~/niftifolder'  # NIfTIファイルを保存するフォルダへのパス
+dicom_folder = '~/dataset'  # DICOMファイルの親フォルダへのパス
+nifti_output_folder = '~/dataset_nifti'  # NIfTIファイルを保存するフォルダへのパス
 
 convert_dicom_to_nifti(dicom_folder, nifti_output_folder)
 

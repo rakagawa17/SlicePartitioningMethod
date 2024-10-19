@@ -50,12 +50,12 @@ def process_file(input_file, output_folder, masks, combined_filename):
 
 def main():
     
-    inputfol = '~/dataset01_nifti'
+    inputfol = '~/dataset_nifti'
     # 入力と出力フォルダのリスト
     input_output_mask_data = [
-        (inputfol, '~/totalSegmentator/organSeg/dataset01_kidney', ['kidney_right', 'kidney_left'], 'kidney'),
-        (inputfol, '~/totalSegmentator/organSeg/dataset01_wholelung', ['lung_upper_lobe_right', 'lung_middle_lobe_right', 'lung_lower_lobe_right', 'lung_upper_lobe_left', 'lung_lower_lobe_left'], 'wholelung'),
-        (inputfol, '~/totalSegmentator/organSeg/dataset01_thyroid', ['thyroid_gland'], 'thyroid_gland')
+        (inputfol, '~/totalSegmentator/organSeg/dataset_thyroidgland', ['thyroid_gland'], 'thyroidgland'),
+        (inputfol, '~/totalSegmentator/organSeg/dataset_wholelung', ['lung_upper_lobe_right', 'lung_middle_lobe_right', 'lung_lower_lobe_right', 'lung_upper_lobe_left', 'lung_lower_lobe_left'], 'wholelung'),
+        (inputfol, '~/totalSegmentator/organSeg/dataset_kidney', ['kidney_right', 'kidney_left'], 'kidney')
     ]
 
     # 各フォルダの処理
