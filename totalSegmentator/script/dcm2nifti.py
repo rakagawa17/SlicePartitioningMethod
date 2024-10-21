@@ -3,10 +3,7 @@ import dicom2nifti
 import shutil
 
 def convert_dicom_to_nifti(dicom_folder, nifti_output_folder):
-    # DICOMファイルが格納されているディレクトリ（case0001, case0002, case0003...）
-    # 変換後のNIfTIファイルを保存するディレクトリ
 
-    # 各ケースディレクトリを走査
     for case in os.listdir(dicom_folder):
         case_path = os.path.join(dicom_folder, case)
         if os.path.isdir(case_path):
@@ -14,7 +11,6 @@ def convert_dicom_to_nifti(dicom_folder, nifti_output_folder):
 #            ct1_path = os.path.join(case_path, 'CT1')
              ct2_path = os.path.join(case_path, 'CT2')
             if os.path.isdir(ct1_path):
-                # 一時出力先ディレクトリを指定
                 temp_output_folder = os.path.join(nifti_output_folder, "temp")
                 os.makedirs(temp_output_folder, exist_ok=True)
                 
@@ -22,12 +18,12 @@ def convert_dicom_to_nifti(dicom_folder, nifti_output_folder):
                 try:
                     dicom2nifti.convert_directory(ct1_path, temp_output_folder, compression=True, reorient=True)
                     
-                    # 変換されたファイルを見つけてリネーム
+                    # 変換されたファイルをrename
                     for file_name in os.listdir(temp_output_folder):
                         if file_name.endswith('.nii.gz'):
                             source_file = os.path.join(temp_output_folder, file_name)
                             target_file = os.path.join(nifti_output_folder, f"{case}_CT2.nii.gz")
-                            # target_file = os.path.join(nifti_output_folder, f"{case}_CT2.nii.gz")
+                            # target_file = os.path.join(nifti_output_folder, f"{case}_CT1.nii.gz")
                             shutil.move(source_file, target_file)
                             print(f"Successfully converted {ct2_path} to {target_file}")
                 except Exception as e:
@@ -37,8 +33,8 @@ def convert_dicom_to_nifti(dicom_folder, nifti_output_folder):
                     shutil.rmtree(temp_output_folder)
 
 # 使用例
-dicom_folder = '/dcmfolder'  # DICOMファイルの親フォルダへのパス
-nifti_output_folder = '/niftifolder'  # NIfTIファイルを保存するフォルダへのパス
+dicom_folder = '~/dataset'  # DICOMファイルの親フォルダへのパス
+nifti_output_folder = '~/dataset_nifti'  # NIfTIファイルを保存するフォルダへのパス
 
 convert_dicom_to_nifti(dicom_folder, nifti_output_folder)
 
