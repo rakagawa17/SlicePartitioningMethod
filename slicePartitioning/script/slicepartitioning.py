@@ -152,6 +152,8 @@ def find_and_copy_missing_files(folder1, folder2, alldata_folder):
                     else:
                         print(f"{file_name} が {alldata_ct} に存在しません")
 
+    print("Dataset copy complete")
+
 #入力フォルダ: dataset01 or dataset02 or test
 src_dir = '~/dataset'
 
