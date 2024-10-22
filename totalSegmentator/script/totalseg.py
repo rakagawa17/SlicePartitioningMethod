@@ -51,7 +51,9 @@ def process_file(input_file, output_folder, masks, combined_filename):
 def main():
     
     inputfol = '~/dataset_nifti'
-    # 入力と出力フォルダのリスト
+
+    ## 各パラメータのmasks`['thyroid_gland'], ...`を変更することで検出する臓器を変更可能です．
+    ## 検出する臓器名は以下を参照してください：https://github.com/wasserth/TotalSegmentator/blob/ff50878153342c7b4cb8ae466f7d98aadde4797d/README.md
     input_output_mask_data = [
         (inputfol, '~/totalSegmentator/organSeg/dataset_thyroidgland', ['thyroid_gland'], 'thyroidgland'),
         (inputfol, '~/totalSegmentator/organSeg/dataset_wholelung', ['lung_upper_lobe_right', 'lung_middle_lobe_right', 'lung_lower_lobe_right', 'lung_upper_lobe_left', 'lung_lower_lobe_left'], 'wholelung'),
