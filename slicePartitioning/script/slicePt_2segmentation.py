@@ -3,6 +3,15 @@ import shutil
 import nibabel as nib
 import pydicom
 
+'''
+２つのセグメンテーションデータから３領域に分割するスクリプト
+
+Parameters:
+dataset_folder (str): 分割したデータセットのフォルダパス
+seg1_nifti_base (str): セグメンテーションデータが保存されているフォルダのパス
+seg2_nifti_base (str): セグメンテーションデータが保存されているフォルダのパス
+'''
+
 def get_nifti_slice_range(nifti_file):
     # NIfTIファイルを読み込む
     img = nib.load(nifti_file)
@@ -112,7 +121,7 @@ def process_all_cases(dataset_folder, seg1_nifti_base, seg2_nifti_base, output_b
         seg1_nifti = os.path.join(seg1_nifti_base, f"{case_name}_CT2", f"aorta_{case_name}_CT2.nii.gz")
         seg2_nifti = os.path.join(seg2_nifti_base, f"{case_name}_CT2", f"liver_{case_name}_CT2.nii.gz")
 
-        # 出力フォルダを設定
+        # 出力フォルダ名を設定
         output_upper = os.path.join(output_base + "_upper", f"{case_name}")
         output_middle = os.path.join(output_base + "_middle", f"{case_name}")
         output_lower = os.path.join(output_base + "_lower", f"{case_name}")
@@ -121,10 +130,10 @@ def process_all_cases(dataset_folder, seg1_nifti_base, seg2_nifti_base, output_b
         split_dicom_files(dataset_folder, case_folder, seg1_nifti, seg2_nifti, output_upper, output_middle, output_lower)
 
 # 入力フォルダと出力フォルダのパス
-dataset_folder = '/Users/akagawa/Downloads/demo/sample2/dataset'
-seg1_nifti_base = '/Users/akagawa/Downloads/demo/sample2/organ/aorta'
-seg2_nifti_base = '/Users/akagawa/Downloads/demo/sample2/organ/liver'
-output_base = '/Users/akagawa/Downloads/demo/sample2/datset'
+dataset_folder = '~/dataset'
+seg1_nifti_base = '~/totalSegmentator/organSeg/dataset_aorta'
+seg2_nifti_base = '~/totalSegmentator/organSeg/dataset_liver'
+output_base = dataset_folder
 
 # 全てのケースを処理
 process_all_cases(dataset_folder, seg1_nifti_base, seg2_nifti_base, output_base)
