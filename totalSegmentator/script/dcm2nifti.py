@@ -8,7 +8,7 @@ def convert_dicom_to_nifti(dicom_folder, nifti_output_folder):
         case_path = os.path.join(dicom_folder, case)
         if os.path.isdir(case_path):
             # CT1 or CT2フォルダを探す
-#            ct1_path = os.path.join(case_path, 'CT1')
+            # ct1_path = os.path.join(case_path, 'CT1')
              ct2_path = os.path.join(case_path, 'CT2')
             if os.path.isdir(ct1_path):
                 temp_output_folder = os.path.join(nifti_output_folder, "temp")
