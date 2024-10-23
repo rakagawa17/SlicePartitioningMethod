@@ -42,11 +42,21 @@ def validate_dicom_file(file_path):
         print(f"Error reading DICOM file {file_path}: {e}")
         return None
 
-# セグメンテーションデータの最初のスライス番号を取得し，DICOMファイルを分割
+# セグメンテーションのスライス範囲に基づいてDICOMファイルを分割
 def split_dicom_files(dataset_folder, case_folder, seg1_nifti, seg2_nifti, output_upper, output_middle, output_lower):
+    # NIfTI ファイルが存在するかチェック
+    if not os.path.exists(seg1_nifti) or not os.path.exists(seg2_nifti):
+        print(f"{case_folder} のセグメンテーションファイルが見つかりません。スキップします。")
+        return
+
     # NIfTI ファイルから最初のスライス番号のindexを取得
-    seg1_start = get_nifti_slice_range(seg1_nifti)
-    seg2_start = get_nifti_slice_range(seg2_nifti)
+    try:
+        seg1_start = get_nifti_slice_range(seg1_nifti)
+        seg2_start = get_nifti_slice_range(seg2_nifti)
+    except FileNotFoundError as e:
+        print(f"セグメンテーションファイルの読み込みに失敗しました: {e}")
+        return
+
     print(f"segmentation1の初めのスライス番号：{seg1_start}\nsegmentation2の初めのスライス番号：{seg2_start}")
 
     if seg1_start > seg2_start :
