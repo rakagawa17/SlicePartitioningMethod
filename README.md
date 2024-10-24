@@ -8,6 +8,7 @@ CUDAのバージョンに対応したPyTorchをインストールしてくださ
 ```python
 # Pytorchをinstallしていない場合（例：CUDA 11.8）
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
 # 必要なライブラリのダウンロード
 pip install -r requirements.txt
 ```
@@ -32,7 +33,13 @@ __step3．__ 作成したセグメンテーションをもとにデータセッ�
 ```python
 cd 
 cd ~/SlicePartitioningMethod/slicePartitioning/script
+
+# データ分割用のセグメンテーションが３つの場合
 python slicepartitioning.py
+
+# データ分割用のセグメンテーションが2つの場合
+python slicePt_2segmentation.py
+
 ```
 
 <br>
